@@ -1,0 +1,17 @@
+server:
+  port: ${PORT}
+
+
+spring:
+  cloud:
+    config:
+      server:
+        git:
+          uri: https://github.com/dheerajdac/config_repo
+          skipSslValidation: true
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${PEER1}:8761/eureka/,http://${PEER2}:8762/eureka/,http://${PEER3}:8763/eureka/
