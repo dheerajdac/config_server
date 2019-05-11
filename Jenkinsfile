@@ -1,14 +1,13 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3.6.1-jdk-8-alpine'
+            image 'maven:3-alpine'
         }
     }
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                sh 'mvn --version'
-                sh 'mvn install'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
     }
