@@ -2,7 +2,7 @@ pipeline {
 
     environment {
         registry = "dheerajdac/config_server"
-        registryqa01 = "dheerajdac/discovery_server:qa01"
+        registryqa01 = "dheerajdac/config_server:qa01"
         registryCredential = 'dockerhub'
         dockerImage = ''
      }
