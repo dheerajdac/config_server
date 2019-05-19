@@ -2,6 +2,7 @@ pipeline {
 
     environment {
         registry = "dheerajdac/config_server"
+        registryqa01 = "dheerajdac/discovery_server:qa01"
         registryCredential = 'dockerhub'
         dockerImage = ''
      }
@@ -40,12 +41,36 @@ pipeline {
             }
         }
 
+        stage('Building Image qa01') {
+            steps{
+                script {
+                    dockerImage = docker.build registryqa01
+                }
+            }
+        }
+
+        stage('Deploy Image qa01') {
+            steps{
+                script {
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }
+
         stage('Remove Unused docker image') {
             steps{
                 sh "docker rmi $registry:$BUILD_NUMBER"
+                sh "docker rmi registryqa01"
             }
         }
     }
 
+    post{
+        always{
+            sh 'mvn clean'
+        }
+    }
 
 }
