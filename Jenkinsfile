@@ -6,21 +6,22 @@ pipeline {
         dockerImage = ''
      }
 
-    agent any
+    agent {
+        docker {
+            image 'dheerajdac/ubuntu:9'
+            args '-v $HOME/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     stages {
-        stage('Build') {
-            agent {
-                docker {
-                    image 'maven:3-alpine'
-                }
-            }
 
+        stage('Build') {
             steps {
                 sh 'mvn -B clean package'
                 sh 'ls target'
             }
         }
+
         stage('Building Image') {
             steps{
                 script {
@@ -28,6 +29,7 @@ pipeline {
                 }
              }
         }
+
         stage('Deploy Image') {
             steps{
                 script {
@@ -37,6 +39,7 @@ pipeline {
                 }
             }
         }
+
         stage('Remove Unused docker image') {
             steps{
                 sh "docker rmi $registry:$BUILD_NUMBER"
