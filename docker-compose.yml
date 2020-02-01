@@ -1,0 +1,16 @@
+version: "3"
+services:
+  config-server-1:
+    build: .
+    networks:
+      - webnet
+    ports:
+      - "8888:8888"
+    environment:
+      - PORT=8888
+volumes:
+  esdata1:
+    driver: local
+
+networks:
+  webnet:
