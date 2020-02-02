@@ -4,7 +4,7 @@ pipeline {
         registry = "dheerajdac/config_server"
         registryqa01 = "dheerajdac/config_server:qa01"
         registryCredential = 'dockerhub'
-        registryUrl = ''
+        registryUrl = 'https://registry.hub.docker.com'
         dockerImage = ''
      }
 
